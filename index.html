@@ -6,316 +6,495 @@
     <title>Own Your Web - Get Started</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --black: #000000;
-            --dark-gray: #0a0a0a;
-            --medium-gray: #1a1a1a;
-            --green: #00ff41;
-            --green-dim: #00cc33;
+            --black: #0a0a0a;
+            --black-light: #111;
+            --grey: #1a1a1a;
+            --grey-border: #2a2a2a;
+            --blue: #00c8ff;
+            --blue-dim: rgba(0, 200, 255, 0.15);
             --white: #ffffff;
-            --gray: #888888;
-            --light-gray: #cccccc;
+            --soft: #ccc;
+            --muted: #888;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--black);
+            background: var(--black);
             color: var(--white);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Terminal header */
-        .terminal-header {
-            background: var(--dark-gray);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--green);
+        /* ===== NAV ===== */
+        .nav {
+            padding: 0.9rem 1.25rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--grey-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.6s ease;
         }
 
-        .terminal-prompt {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--green);
-            font-size: 0.9rem;
-        }
-
-        .cursor {
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Main content */
-        .container {
-            flex: 1;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 4rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        h1 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 2rem;
-            color: var(--green);
-            margin-bottom: 0.5rem;
+        .nav-logo {
+            font-size: 1rem;
             font-weight: 700;
+            color: var(--blue);
+            letter-spacing: -0.5px;
         }
 
-        .subtitle {
-            color: var(--gray);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
+        .nav-link {
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            padding: 0.35rem 0.7rem;
+            border-radius: 6px;
+            transition: all 0.3s;
         }
 
-        /* Form */
-        .signup-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+        .nav-link:hover { background: var(--blue-dim); }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 3rem 1.25rem 2rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            background: var(--blue-dim);
+            border: 1px solid rgba(0, 200, 255, 0.25);
+            border-radius: 20px;
+            font-size: 0.6rem;
+            color: var(--blue);
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeDown 0.7s ease 0.1s both;
+        }
+
+        .hero h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+            animation: fadeDown 0.7s ease 0.2s both;
+        }
+
+        .hero h1 span { color: var(--blue); }
+
+        .hero p {
+            font-size: 0.85rem;
+            color: var(--soft);
+            max-width: 420px;
+            margin: 0 auto;
+            line-height: 1.5;
+            animation: fadeDown 0.7s ease 0.3s both;
+        }
+
+        /* ===== FORM ===== */
+        .form-section {
+            padding: 0 1.25rem 2.5rem;
+        }
+
+        .form-wrap {
+            max-width: 440px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.7s ease 0.4s forwards;
         }
 
         .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            margin-bottom: 0.85rem;
         }
 
-        label {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--green);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #aaa;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.3px;
         }
 
-        input {
-            background: var(--dark-gray);
-            border: 1px solid var(--medium-gray);
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--black-light);
+            border: 1px solid var(--grey-border);
+            border-radius: 10px;
             color: var(--white);
-            padding: 1rem;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-family: 'Inter', sans-serif;
-            border-radius: 0;
+            outline: none;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        input:focus {
-            outline: none;
-            border-color: var(--green);
-            box-shadow: 0 0 0 2px rgba(0, 255, 65, 0.1);
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(0, 200, 255, 0.08);
         }
 
-        input::placeholder {
-            color: var(--gray);
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #555;
         }
 
-        /* Submit button */
+        .form-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
         .submit-btn {
-            background: var(--black);
-            border: 2px solid var(--green);
-            color: var(--green);
-            padding: 1rem 2rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--blue);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 1rem;
+            margin-top: 0.25rem;
         }
 
         .submit-btn:hover {
-            background: var(--green);
-            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 200, 255, 0.2);
         }
 
-        .submit-btn:active {
-            transform: scale(0.98);
+        .submit-btn:active { transform: scale(0.98); }
+
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .form-note {
+            font-size: 0.62rem;
+            color: #555;
+            text-align: center;
+            margin-top: 0.85rem;
         }
 
         /* Success message */
-        .success-message {
+        .message-box {
             display: none;
             text-align: center;
-            padding: 3rem;
-            border: 1px solid var(--green);
+            padding: 2.5rem 1.5rem;
+            background: var(--black-light);
+            border: 1px solid var(--blue);
+            border-radius: 14px;
+            max-width: 440px;
+            margin: 0 auto;
         }
 
-        .success-message.show {
-            display: block;
+        .message-box.show { display: block; animation: fadeUp 0.5s ease; }
+        .signup-form.hide { display: none; }
+        .message-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-section {
+            padding: 2.5rem 1.25rem;
+            background: var(--black-light);
+            border-top: 1px solid var(--grey-border);
         }
 
-        .signup-form.hide {
-            display: none;
-        }
-
-        .success-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Footer */
-        .footer {
+        .how-label {
+            color: var(--blue);
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             text-align: center;
-            padding: 2rem;
-            border-top: 1px solid var(--medium-gray);
-            color: var(--gray);
+            margin-bottom: 0.35rem;
+        }
+
+        .how-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .step {
+            width: 100%;
+            padding: 1.15rem;
+            background: var(--black);
+            border: 1px solid var(--grey-border);
+            border-radius: 12px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .step.visible {
+            animation: stepIn 0.5s ease forwards;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            background: var(--blue-dim);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--blue);
+            margin: 0 auto 0.5rem;
+        }
+
+        .step h3 {
             font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
         }
 
-        .footer a {
-            color: var(--green);
-            text-decoration: none;
+        .step p {
+            font-size: 0.72rem;
+            color: var(--muted);
+            line-height: 1.4;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        .step-arrow {
+            color: var(--blue);
+            font-size: 1rem;
+            padding: 0.2rem 0;
+            opacity: 0;
         }
 
-        /* Mobile responsive */
-        @media (max-width: 640px) {
-            .container {
-                padding: 2rem 1.25rem;
-            }
+        .step-arrow.visible {
+            animation: arrowIn 0.3s ease forwards;
+        }
 
-            h1 {
-                font-size: 1.5rem;
-            }
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+            font-size: 0.62rem;
+            color: #555;
+            border-top: 1px solid var(--grey-border);
+        }
 
-            .subtitle {
-                font-size: 1rem;
-            }
+        .footer a { color: var(--blue); text-decoration: none; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes stepIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes arrowIn {
+            to { opacity: 1; }
+        }
+
+        /* ===== DESKTOP ===== */
+        @media (min-width: 768px) {
+            .hero { padding: 4rem 2rem 3rem; }
+            .hero h1 { font-size: 2rem; }
+            .form-wrap { max-width: 500px; }
+            .steps { flex-direction: row; gap: 1rem; max-width: 700px; }
+            .step { flex: 1; }
+            .step-arrow { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="terminal-header">
-        <div class="terminal-prompt">
-            > ownyourweb@main:~$ ./signup<span class="cursor">_</span>
+
+    <nav class="nav">
+        <div class="nav-logo">OwnYourWeb</div>
+        <a href="https://innergclaw.github.io/ownyourweb-landing/" class="nav-link">Learn More</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">Your Website. Your Rules.</div>
+        <h1>Own Your <span>Web Presence</span></h1>
+        <p>Move from rented platforms to owned infrastructure. Tell us about your project and we'll build it right.</p>
+    </section>
+
+    <section class="form-section">
+        <div class="form-wrap">
+            <div class="signup-form" id="signupForm">
+                <form id="leadForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Business Name</label>
+                        <input type="text" name="business" placeholder="Your company or project">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Current Website (optional)</label>
+                        <input type="url" name="website" placeholder="https://yourcurrentsite.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tell us about your project</label>
+                        <textarea name="message" placeholder="What are you building? What do you need?"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">Get Started</button>
+                </form>
+                <div class="form-note">We'll respond within 24 hours. No spam, no pressure.</div>
+            </div>
+
+            <div class="message-box" id="messageBox">
+                <div class="message-icon" id="messageIcon">✓</div>
+                <h2 id="messageTitle" style="margin-bottom: 0.75rem;">Submitted</h2>
+                <p id="messageText" style="color: var(--muted); font-size: 0.85rem;"></p>
+            </div>
         </div>
-        <div class="terminal-prompt" style="opacity: 0.7;">
-            v1.0
+    </section>
+
+    <section class="how-section">
+        <div class="how-label">Simple Process</div>
+        <div class="how-title">How It Works</div>
+        <div class="steps" id="stepsContainer">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Tell Us</h3>
+                <p>Share your vision, business type, and what you need in a website</p>
+            </div>
+            <div class="step-arrow">↓</div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>We Build</h3>
+                <p>Custom design and development tailored to your brand and goals</p>
+            </div>
+            <div class="step-arrow">↓</div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>You Own It</h3>
+                <p>Full ownership of your site, domain, and hosting. No platform lock-in</p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container">
-        <!-- Form -->
-        <div class="signup-form" id="signupForm">
-            <h1>Get Started</h1>
-            <p class="subtitle">Move from rented platforms to owned infrastructure. Tell us about your project.</p>
-
-            <form
-                action="https://formspree.io/f/mpqjpjgj"
-                method="POST"
-                id="leadForm"
-            >
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Your name"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="you@example.com"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="business">Business Name</label>
-                    <input
-                        type="text"
-                        id="business"
-                        name="business"
-                        placeholder="Your company or project"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="website">Current Website (optional)</label>
-                    <input
-                        type="url"
-                        id="website"
-                        name="website"
-                        placeholder="https://yourcurrentsite.com"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Tell us about your project</label>
-                    <input
-                        type="text"
-                        id="message"
-                        name="message"
-                        placeholder="What are you building?"
-                    >
-                </div>
-
-                <button type="submit" class="submit-btn">Submit</button>
-            </form>
-        </div>
-
-        <!-- Success message -->
-        <div class="success-message" id="successMessage">
-            <div class="success-icon">✓</div>
-            <h1 style="margin-bottom: 1rem;">Received.</h1>
-            <p style="color: var(--gray);">
-                We'll be in touch soon.
-            </p>
-        </div>
-    </div>
-
-    <div class="footer">
-        <a href="https://innergclaw.github.io/ownyourweb-landing/">Own Your Web</a>
-        — Your website. Your server. Your control.
-    </div>
+    <footer class="footer">
+        <a href="https://nasirr.innergintel.org">Built by Nasirr Mayo</a> · OwnYourWeb Systems · InnerG Intel
+    </footer>
 
     <script>
-        // Handle form submission
-        const form = document.getElementById('leadForm');
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = (i * 0.15) + 's';
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.step, .step-arrow').forEach(el => observer.observe(el));
+
+        // Form config
+        const CONFIG = {
+            formEndpoint: 'https://formspree.io/f/xqedpvon',
+            email: 'ownyourwebsystems@agentmail.to',
+            apiKey: 'am_2bc02a6e70fc084a260fce1128dbc58559b5c0401fc064c0ab883d6e999809ff'
+        };
+
         const signupForm = document.getElementById('signupForm');
-        const successMessage = document.getElementById('successMessage');
+        const messageBox = document.getElementById('messageBox');
+        const messageTitle = document.getElementById('messageTitle');
+        const messageText = document.getElementById('messageText');
+        const messageIcon = document.getElementById('messageIcon');
+        const submitBtn = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', function(e) {
+        signupForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
 
-            // Simulate submission (replace with actual Formspree integration)
-            const formData = new FormData(form);
+            try {
+                const formData = new FormData(signupForm);
+                formData.append('_replyto', CONFIG.email);
 
-            // For now, just show success
-            signupForm.classList.add('hide');
-            successMessage.classList.add('show');
+                const headers = {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+                };
 
-            // In production, Formspree handles this automatically
-            // form.submit();
+                if (CONFIG.apiKey) {
+                    headers['Authorization'] = 'Basic ' + btoa(CONFIG.apiKey + ':');
+                }
+
+                const response = await fetch(CONFIG.formEndpoint, {
+                    method: 'POST',
+                    headers: headers,
+                    body: new URLSearchParams(formData).toString()
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    signupForm.classList.add('hide');
+                    messageBox.classList.add('show');
+                    messageTitle.textContent = 'Submitted ✓';
+                    messageText.textContent = "We've received your info and will be in touch within 24 hours.";
+                    signupForm.reset();
+                } else {
+                    throw new Error(data.error || 'Submission failed');
+                }
+            } catch (error) {
+                submitBtn.textContent = 'Get Started';
+                submitBtn.disabled = false;
+                alert('Something went wrong. Please try again.');
+            }
         });
     </script>
 </body>
